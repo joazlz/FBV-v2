@@ -1,0 +1,28 @@
+version: '3.7'
+
+services:
+
+  mysql:
+    build:
+      context: ./
+      dockerfile: dockerfiles/mysql/mysql.docker
+    container_name: mysql
+    ports:
+      - '23306:3306'
+    environment:
+      - MYSQL_DATABASE=core
+      - MYSQL_ROOT_PASSWORD=FVB2021
+      - "TZ=America/Guatemala"
+    volumes:
+      - /Users/joaquinlinares/Documents/data/mysqlFVB:/var/lib/mysql
+    networks:
+      mysql_network:
+        aliases:
+          - mysql_host
+
+volumes:
+  schema: {}
+networks:
+  mysql_network:
+    name: mysql_net
+    driver: bridge
