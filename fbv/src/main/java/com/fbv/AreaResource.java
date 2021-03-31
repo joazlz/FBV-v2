@@ -18,45 +18,43 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.fbv.Models.Actividad;
-import com.fbv.Repository.ActividadRepository;
+import com.fbv.Models.Area;
+import com.fbv.Repository.AreaRepository;
+
+
     
 
-@Path("/actividad")
-public class ActividadResource {
+@Path("/area")
+public class AreaResource {
     
     @Inject
-    private ActividadRepository actividadRepository;
+    private AreaRepository areaRepository;
 
 
     @GET
     @Path("/lista")
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
-    public List<Actividad> all() {
-        return actividadRepository.getAll();
+    public List<Area> all() {
+        return areaRepository.getAll();
     }
 
     @GET
     @Path("/buscar")
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
-    public List<Actividad> actividad(@QueryParam("id") Long id,
-                                        @QueryParam("nombre") String nombre,
-                                        @QueryParam("utilizaquimico") boolean utilizaQuimico) {
+    public List<Area> actividad(@QueryParam("id") Long id,
+                                @QueryParam("nombre") String nombre) {
         if(id!=null){
-            List<Actividad> ac = new ArrayList<>();
-            Actividad a = actividadRepository.buscarId(id);
+            List<Area> ac = new ArrayList<>();
+            Area a = areaRepository.buscarId(id);
             if(a!=null){
-                ac.add(actividadRepository.buscarId(id));
+                ac.add(areaRepository.buscarId(id));
             }
     
             return ac;
         }
-        if(nombre!=null){
-            return actividadRepository.buscarNombre(nombre);
-        }
-        return actividadRepository.buscarUtilizaQuimico(utilizaQuimico);
+        return areaRepository.buscarNombre(nombre);
     }
 
     @POST
@@ -66,14 +64,13 @@ public class ActividadResource {
     public Response crear(@QueryParam("nombre") String nombre,
                             @QueryParam("utilizaquimico") boolean utilizaQuimico) {
         try {
-            Actividad actividad = new Actividad();
+            Area area = new Area();
 
-            actividad.nombre = nombre;
-            actividad.utilizaQuimico = utilizaQuimico;
+            area.nombre = nombre;
 
-            actividadRepository.crear(actividad);
+            areaRepository.crear(area);
 
-            return Response.ok(actividad,MediaType.APPLICATION_JSON).build();
+            return Response.ok(area,MediaType.APPLICATION_JSON).build();
         }
         catch(PersistenceException pe){
             return Response.serverError().build();
@@ -88,15 +85,14 @@ public class ActividadResource {
                                 @QueryParam("nombre") String nombre,
                                 @QueryParam("utilizaquimico") boolean utilizaQuimico) {
         try {
-            Actividad actividad = new Actividad();
+            Area area = new Area();
 
-            actividad.id = id;
-            actividad.nombre = nombre;
-            actividad.utilizaQuimico = utilizaQuimico;
+            area.id = id;
+            area.nombre = nombre;
 
-            actividadRepository.actualizar(actividad);
+            areaRepository.actualizar(area);
 
-            return Response.ok(actividad,MediaType.APPLICATION_JSON).build();
+            return Response.ok(area,MediaType.APPLICATION_JSON).build();
         }
         catch(PersistenceException pe){
             return Response.serverError().build();
@@ -108,7 +104,7 @@ public class ActividadResource {
     @Transactional
     public Response eliminar(@PathParam("id") Long id){
         try {
-            actividadRepository.eliminar(id);
+            areaRepository.eliminar(id);
             return Response.ok(id,MediaType.APPLICATION_JSON).build();
         }
         catch(PersistenceException pe){

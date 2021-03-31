@@ -12,14 +12,14 @@ import javax.persistence.Table;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 
 @Entity
-@Table(name = "tipos_empleados")
-public class TipoEmpleado extends PanacheEntity{
+@Table(name = "estados_empleados")
+public class EstadoEmpleado extends PanacheEntity{
     
     @Column
     public String nombre;
-
+    
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "tipo_id")
+    @JoinColumn(name = "estado_id")
     private List<Empleado> empleados;
     
 }

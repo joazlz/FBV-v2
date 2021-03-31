@@ -7,8 +7,9 @@ import javax.persistence.Table;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 
 @Entity
-@Table(name = "tipos_plantas")
-public class TipoPlanta extends PanacheEntity{
+@Table(name = "estados_herramientas")
+public class EstadoHerramienta extends PanacheEntity{
+    
     @Column
     public String nombre;
     

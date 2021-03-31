@@ -19,17 +19,26 @@ public class ActividadRepository implements PanacheRepository<Actividad>{
         return listAll();
     }
 
-    public Actividad buscarNombre(String nombre){
-        return find("nombre", nombre).firstResult();
+    public List<Actividad> buscarNombre(String nombre){
+        return find("nombre like ?1", "%"+nombre+"%").list();
+    }
+
+    public List<Actividad> buscarUtilizaQuimico(Boolean utiliza){
+        return find("utilizaQuimico = ?1", utiliza).list();
     }
 
     public Actividad buscarId(Long id){
         return findById(id);
     }
 
+    public void eliminar(Long id){
+        deleteById(id);
+    }
+
     public void actualizar(Actividad actividad){
         Actividad up = buscarId(actividad.id);
         up.nombre = actividad.nombre;
+        up.utilizaQuimico = actividad.utilizaQuimico;
     }
 
 
