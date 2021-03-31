@@ -10,7 +10,7 @@ import io.quarkus.hibernate.orm.panache.PanacheEntity;
 @Table(name = "actividades")
 public class Actividad extends PanacheEntity{
     
-    @Column
+    @Column(nullable = false)
     public String nombre;
 
     @Column
